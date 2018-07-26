@@ -69,6 +69,13 @@ contract VipnodePool {
     // XXX: TODO
   }
 
+
+  // removeClientNode removes nodeID from the msg.sender's client's node
+  // whitelist.
+  function removeClientNode(nodeID bytes32) {
+    // XXX: TODO
+  }
+
   // Only callable by operator: Deduct _amount from _client's balance and send
   // it to _operator.
   // If _release, then send the remaining _balance to the _client and set
