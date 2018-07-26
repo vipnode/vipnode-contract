@@ -23,9 +23,10 @@ contract VipnodePool {
   // the balance and unlock it for withdrawing.
   event ForceSettle(
     address client,
-    uint timestamp,
-  )
+    uint timestamp
+  );
 
+  // Client represents a Pool client who pays to connect to a Pool host.
   struct Client {
     bytes32[] nodes; // Whitelisted nodes by Client
     uint balance; // Client's balance
@@ -43,14 +44,14 @@ contract VipnodePool {
   mapping (address => Client) clients;
 
   constructor(address _operator) {
-    require(_operator, != address(0));
+    require(_operator != address(0));
 
     operator = _operator;
   }
 
   // addBalance adds the msg.sender as a Client and adds the nodeID to the node
   // whitelist. If nodeID is 0, whitelisting is skipped.
-  function addBalance(nodeID bytes32) payable {
+  function addBalance(bytes32 nodeID) payable {
     // XXX: TODO
   }
 
@@ -72,7 +73,7 @@ contract VipnodePool {
 
   // removeClientNode removes nodeID from the msg.sender's client's node
   // whitelist.
-  function removeClientNode(nodeID bytes32) {
+  function removeClientNode(bytes32 nodeID) {
     // XXX: TODO
   }
 
