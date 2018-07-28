@@ -1,7 +1,6 @@
 TRUFFLEBIN := ./node_modules/.bin/truffle
 
 build: deps contracts
-	npm run build
 
 test: deps contracts
 	npm run truffle-test
@@ -14,10 +13,10 @@ deploy-contract:
 
 deps: node_modules/
 
-contracts: contracts/*
+contracts: build/contracts/*
 
 build/contracts/%.json: contracts/%.sol
-	npm run truffle-compile
+	$(TRUFFLEBIN) compile
 
 node_modules/: package.json
 	npm install
