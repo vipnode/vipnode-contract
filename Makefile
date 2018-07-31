@@ -3,7 +3,7 @@ TRUFFLEBIN := ./node_modules/.bin/truffle
 build: deps contracts
 
 test: deps contracts
-	npm run truffle-test
+	$(TRUFFLEBIN) test
 
 run: deps contracts
 	npm run dev

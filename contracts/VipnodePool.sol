@@ -40,19 +40,30 @@ contract VipnodePool {
   }
 
   // operator is the pool operator who has permission to manage the client balances.
-  address operator;
+  address public operator;
 
   // Amount of time the pool manager has to settle the balance before the
   // client can force a balance withdraw.
   uint256 public withdrawInterval = 7 days;
 
   // Mapping of owner -> client.
-  mapping (address => Client) clients;
+  mapping (address => Client) public clients;
 
-  constructor(address _operator) {
+  constructor(address _operator) public {
     require(_operator != address(0));
 
     operator = _operator;
+  }
+
+  // [Pure] checkBalance confirms that a nodeID exists and there is a minimum
+  // balance available for the client.
+  function checkBalance(address _client, bytes32 _nodeID, uint256 _minBalance) public view returns (bool) {
+    Client memory c = clients[_client];
+    if (c.balance < _minBalance) return false;
+    for(uint i=0; i<c.nodeIDs.length; i++) {
+      if (c.nodeIDs[i] == _nodeID) return true;
+    }
+    return false;
   }
 
   // addBalance adds the msg.sender as a Client and adds the nodeID to the node
@@ -61,11 +72,11 @@ contract VipnodePool {
     Client storage c = clients[msg.sender];
     c.balance = c.balance + msg.value;
 
-    if (nodeID != bytes32(0)) {
-      c.nodeIDs.push(_nodeID)
+    if (_nodeID != bytes32(0)) {
+      c.nodeIDs.push(_nodeID);
     }
 
-    Balance(msg.sender, c.balance);
+    emit Balance(msg.sender, c.balance);
   }
 
   // forceSettle emits a ForceSettle event for the msg.sender if it's a valid
@@ -78,9 +89,9 @@ contract VipnodePool {
     Client storage c = clients[msg.sender];
     require(c.balance > 0);
 
-    c.timeLocked = this.withdrawInterval + block.timestamp;
+    c.timeLocked = withdrawInterval + block.timestamp;
 
-    ForceSettle(msg.sender, c.timeLocked)
+    emit ForceSettle(msg.sender, c.timeLocked);
   }
 
   // forceWithdraw allows the msg.sender to withdraw any available client
@@ -96,26 +107,32 @@ contract VipnodePool {
     c.timeLocked = 0;
 
     msg.sender.transfer(amount);
-    Balance(msg.sender, c.balance);
+    emit Balance(msg.sender, c.balance);
   }
 
 
+  /*
   // removeClientNode removes nodeID from the msg.sender's client's node
   // whitelist.
   function removeClientNode(bytes32 _nodeID) {
     // XXX: TODO
   }
+  */
+
+  // -------------------
+  // Operator Functions:
+  // -------------------
 
   // Only callable by operator: Deduct _amount from _client's balance and send
   // it to _operator.
   // If _release, then send the remaining _balance to the _client and set
   // _balance to 0. To be called when ForceSettle is initiated.
-  function settle(address _client, uint256 _amount, bool _release) {
-    // FIXME: Confirm that there is no race conflict with addBalance.
+  function opSettle(address _client, uint256 _amount, bool _release) public {
     require(msg.sender == operator);
+    // FIXME: Confirm that there is no race conflict with addBalance.
 
     Client storage c = clients[_client];
-    require(c.balance >= _amount)
+    require(c.balance >= _amount);
     c.balance = c.balance - _amount;
 
     if (_release) {
@@ -123,9 +140,19 @@ contract VipnodePool {
       c.balance = 0;
       c.timeLocked = 0;
 
-      _client.sender.transfer(amount);
+      _client.transfer(amount);
     }
 
-    Balance(_client, c.balance);
+    emit Balance(_client, c.balance);
+  }
+
+  // Only callable by operator: Withdraw some balance, this ability is required
+  // to pay the hosts in a trusted manner. Would be nice for this contract to
+  // be trustless, but that would require 2*N*M on-chain transactions to do
+  // naively. A future version will improve upon this.
+  function opWithdraw(uint256 _amount) public {
+    require(msg.sender == operator);
+
+    operator.transfer(_amount);
   }
 }
