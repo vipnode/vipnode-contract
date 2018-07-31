@@ -13,11 +13,13 @@ pragma solidity ^0.4.24;
 // number of NodeIDs (public keys).
 contract VipnodePool {
 
-  // XXX: This is a work in progress. It is not tested yet.
+  // XXX: This is a work in progress. It is not fully tested yet.
 
   // TODO: Should host node balances be also managed on-chain?
   // TODO: Should the operator take a fee? Should the txn fee be taken from the
   // client balance?
+  // TODO: Should the nodeID whitelist be handled entirely by the pool
+  // offchain, and this should be a more generic timelock thing?
 
   // ForceSettle is emitted when a client requests the pool operator to settle
   // the balance and unlock it for withdrawing.
