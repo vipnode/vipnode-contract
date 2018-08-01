@@ -110,14 +110,14 @@ contract('Vipnode Pool', async (accounts) => {
       "premature forceWithdraw after forceSettle failed to revert",
     );
 
-    const timeWarp = client[1].add(42).toString();
+    const timeJump = await instance.withdrawInterval();
     let res = await web3.currentProvider.send({
-      id: 1,
+      id: new Date().getSeconds(),
       jsonrpc: "2.0",
-      method: "evm_setTimestamp",
-      params: [timeWarp],
+      method: "evm_increaseTime",
+      params: [timeJump.toNumber()+42],
     });
-    assert.ok(!res.error, "failed to setTimestamp: "+ res.error.message);
+    assert.notOk(res.error!==undefined, "failed to increase time");
 
     assert.ok(ethbalance(clientWallet) < 90, "end: balance is not near full:" + ethbalance(clientWallet));
     try {
