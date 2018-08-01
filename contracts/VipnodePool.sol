@@ -101,7 +101,8 @@ contract VipnodePool {
   function forceWithdraw() public {
     Client storage c = clients[msg.sender];
     require(c.balance > 0);
-    require(c.timeLocked > block.timestamp);
+    require(c.timeLocked > 0);
+    require(c.timeLocked <= block.timestamp);
 
     // Reset client
     uint256 amount = c.balance;
