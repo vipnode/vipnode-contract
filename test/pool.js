@@ -41,19 +41,17 @@ contract('Vipnode Pool', async (accounts) => {
     const opWallet = accounts[idx++];
     const clientWallet = accounts[idx++];
     const instance = await VipnodePool.new(opWallet);
-    const nodeID = web3.fromAscii("42");
     const value = web3.toWei(42, "ether");
 
-    let res = await instance.addBalance(nodeID, { value: value, from: clientWallet });
+    let res = await instance.addBalance({ value: value, from: clientWallet });
     assert.equal(res.logs[0].event, "Balance");
     let evt = res.logs[0].args;
     assert.equal(evt.client, clientWallet);
     assert.equal(evt.balance, value);
 
-    assert.ok(await instance.checkBalance(clientWallet, nodeID, value - 1000));
-    assert.notOk(await instance.checkBalance(clientWallet, nodeID, value + 1000));
-    assert.notOk(await instance.checkBalance(opWallet, nodeID, value - 1000));
-    assert.notOk(await instance.checkBalance(clientWallet, web3.fromAscii("69"), value - 1000));
+    assert.ok(await instance.checkBalance(clientWallet, value - 1000));
+    assert.notOk(await instance.checkBalance(clientWallet, value + 1000));
+    assert.notOk(await instance.checkBalance(opWallet, value - 1000));
 
     assert.equal(web3.eth.getBalance(instance.address), value);
 
@@ -85,7 +83,7 @@ contract('Vipnode Pool', async (accounts) => {
     }
 
     assert.ok(ethbalance(clientWallet) > 90, "start: balance is close to full:" + ethbalance(clientWallet));
-    await instance.addBalance(0, { value: value, from: clientWallet });
+    await instance.addBalance({ value: value, from: clientWallet });
     assert.ok(ethbalance(clientWallet) < 90, "start: balance is not near full:" + ethbalance(clientWallet));
 
     await expectThrow(

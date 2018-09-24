@@ -15,12 +15,6 @@ contract VipnodePool {
 
   // XXX: This is a work in progress. It is not fully tested yet.
 
-  // TODO: Should host node balances be also managed on-chain?
-  // TODO: Should the operator take a fee? Should the txn fee be taken from the
-  // client balance?
-  // TODO: Should the nodeID whitelist be handled entirely by the pool
-  // offchain, and this should be a more generic timelock thing?
-
   // ForceSettle is emitted when a client requests the pool operator to settle
   // the balance and unlock it for withdrawing.
   event ForceSettle(
@@ -36,7 +30,6 @@ contract VipnodePool {
 
   // Client represents a Pool client who pays to connect to a Pool host.
   struct Client {
-    bytes32[] nodeIDs; // Whitelisted nodes by Client
     uint256 balance; // Client's balance
     uint256 timeLocked; // If not 0, then client will be allowed to withdraw balance after this time.
   }
@@ -57,26 +50,25 @@ contract VipnodePool {
     operator = _operator;
   }
 
-  // [Pure] checkBalance confirms that a nodeID exists and there is a minimum
-  // balance available for the client.
-  function checkBalance(address _client, bytes32 _nodeID, uint256 _minBalance) public view returns (bool) {
+  // ------
+  // Views:
+  // ------
+
+  // checkBalance confirms that there is a minimum balance available for the
+  // client.
+  function checkBalance(address _client, uint256 _minBalance) public view returns (bool) {
     Client memory c = clients[_client];
-    if (c.balance < _minBalance) return false;
-    for(uint i=0; i<c.nodeIDs.length; i++) {
-      if (c.nodeIDs[i] == _nodeID) return true;
-    }
-    return false;
+    return c.balance >= _minBalance;
   }
 
-  // addBalance adds the msg.sender as a Client and adds the nodeID to the node
-  // whitelist. If nodeID is 0, whitelisting is skipped.
-  function addBalance(bytes32 _nodeID) public payable {
+  // ----------
+  // Interface:
+  // ----------
+
+  // addBalance adds the msg.sender as a Client.
+  function addBalance() public payable {
     Client storage c = clients[msg.sender];
     c.balance = c.balance + msg.value;
-
-    if (_nodeID != bytes32(0)) {
-      c.nodeIDs.push(_nodeID);
-    }
 
     emit Balance(msg.sender, c.balance);
   }
@@ -112,15 +104,6 @@ contract VipnodePool {
     msg.sender.transfer(amount);
     emit Balance(msg.sender, c.balance);
   }
-
-
-  /*
-  // removeClientNode removes nodeID from the msg.sender's client's node
-  // whitelist.
-  function removeClientNode(bytes32 _nodeID) {
-    // XXX: TODO
-  }
-  */
 
   // -------------------
   // Operator Functions:
