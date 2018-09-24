@@ -1,10 +1,10 @@
 {
   "name": "vipnode-contract",
-  "version": "0.0.0",
+  "version": "0.2.1",
   "description": "Smart contract for vipnode.",
   "main": "index.js",
   "dependencies": {
-    "truffle": "^4.1.13"
+    "truffle": "^4.1.14"
   },
   "devDependencies": {},
   "scripts": {
