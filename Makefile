@@ -21,3 +21,6 @@ build/contracts/%.json: contracts/%.sol
 node_modules/: package.json
 	npm install
 	touch node_modules/
+
+gopkg:
+	abigen --sol contracts/VipnodePool.sol --pkg vipnodepool --out go/vipnodepool/VipnodePool.go
