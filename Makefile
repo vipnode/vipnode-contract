@@ -23,4 +23,5 @@ node_modules/: package.json
 	touch node_modules/
 
 gopkg:
+	# Grab a solc binary from https://github.com/ethereum/solidity/releases
 	abigen --sol contracts/VipnodePool.sol --pkg vipnodepool --out go/vipnodepool/VipnodePool.go
