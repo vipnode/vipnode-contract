@@ -12,7 +12,7 @@ Minimum Viable Product implementation. Unlimited usage per interval billing,
 entirely on-chain.
 
 
-### Version 2: VipnodePool.sol
+### Version 2: [VipnodePool.sol](https://github.com/vipnode/vipnode-contract/blob/master/contracts/VipnodePool.sol)
 
 The goals are:
 
