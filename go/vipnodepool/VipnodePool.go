@@ -16,10 +16,10 @@ import (
 )
 
 // VipnodePoolABI is the input ABI used to generate the binding from.
-const VipnodePoolABI = "[{\"constant\":true,\"inputs\":[],\"name\":\"withdrawInterval\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_client\",\"type\":\"address\"},{\"name\":\"_minBalance\",\"type\":\"uint256\"}],\"name\":\"checkBalance\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"operator\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"clients\",\"outputs\":[{\"name\":\"balance\",\"type\":\"uint256\"},{\"name\":\"timeLocked\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"forceWithdraw\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_client\",\"type\":\"address\"},{\"name\":\"_amount\",\"type\":\"uint256\"},{\"name\":\"_release\",\"type\":\"bool\"}],\"name\":\"opSettle\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_amount\",\"type\":\"uint256\"}],\"name\":\"opWithdraw\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"forceSettle\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"addBalance\",\"outputs\":[],\"payable\":true,\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[{\"name\":\"_operator\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"client\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"timeLocked\",\"type\":\"uint256\"}],\"name\":\"ForceSettle\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"client\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"balance\",\"type\":\"uint256\"}],\"name\":\"Balance\",\"type\":\"event\"}]"
+const VipnodePoolABI = "[{\"constant\":true,\"inputs\":[],\"name\":\"withdrawInterval\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"operator\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"accounts\",\"outputs\":[{\"name\":\"balance\",\"type\":\"uint256\"},{\"name\":\"timeLocked\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"forceWithdraw\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_amount\",\"type\":\"uint256\"}],\"name\":\"opWithdraw\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"forceSettle\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"addBalance\",\"outputs\":[],\"payable\":true,\"stateMutability\":\"payable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_account\",\"type\":\"address\"},{\"name\":\"_releaseAmount\",\"type\":\"uint256\"},{\"name\":\"_newBalance\",\"type\":\"uint256\"}],\"name\":\"opSettle\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"name\":\"_operator\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"account\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"timeLocked\",\"type\":\"uint256\"}],\"name\":\"ForceSettle\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"account\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"balance\",\"type\":\"uint256\"}],\"name\":\"Balance\",\"type\":\"event\"}]"
 
 // VipnodePoolBin is the compiled bytecode used for deploying new contracts.
-const VipnodePoolBin = `0x608060405262093a8060015534801561001757600080fd5b506040516020806105b58339810160405251600160a060020a038116151561003e57600080fd5b60008054600160a060020a03909216600160a060020a03199092169190911790556105478061006e6000396000f3006080604052600436106100985763ffffffff7c0100000000000000000000000000000000000000000000000000000000600035041663162075d8811461009d5780634d7b9bd5146100c4578063570ca735146100fc57806361eed2a91461012d5780637be80b3914610167578063a73e679a1461017e578063ae5fa7e7146101a7578063aeea1f7b146101bf578063b163cc38146101d4575b600080fd5b3480156100a957600080fd5b506100b26101dc565b60408051918252519081900360200190f35b3480156100d057600080fd5b506100e8600160a060020a03600435166024356101e2565b604080519115158252519081900360200190f35b34801561010857600080fd5b5061011161022c565b60408051600160a060020a039092168252519081900360200190f35b34801561013957600080fd5b5061014e600160a060020a036004351661023b565b6040805192835260208301919091528051918290030190f35b34801561017357600080fd5b5061017c610254565b005b34801561018a57600080fd5b5061017c600160a060020a03600435166024356044351515610311565b3480156101b357600080fd5b5061017c6004356103f3565b3480156101cb57600080fd5b5061017c610447565b61017c6104ae565b60015481565b60006101ec610504565b5050600160a060020a0391909116600090815260026020908152604091829020825180840190935280548084526001909101549290910191909152101590565b600054600160a060020a031681565b6002602052600090815260409020805460019091015482565b3360009081526002602052604081208054909190811061027357600080fd5b600182015460001061028457600080fd5b600182015442101561029557600080fd5b508054600080835560018301819055604051339183156108fc02918491818181858888f193505050501580156102cf573d6000803e3d6000fd5b50815460408051338152602081019290925280517f134e340554ff8a7d64280a2a28b982df554e2595e5bf45cd39368f31099172a69281900390910190a15050565b600080548190600160a060020a0316331461032b57600080fd5b600160a060020a0385166000908152600260205260409020805490925084111561035457600080fd5b8154849003825582156103a657508054600080835560018301819055604051600160a060020a0387169183156108fc02918491818181858888f193505050501580156103a4573d6000803e3d6000fd5b505b815460408051600160a060020a0388168152602081019290925280517f134e340554ff8a7d64280a2a28b982df554e2595e5bf45cd39368f31099172a69281900390910190a15050505050565b600054600160a060020a0316331461040a57600080fd5b60008054604051600160a060020a039091169183156108fc02918491818181858888f19350505050158015610443573d6000803e3d6000fd5b5050565b336000908152600260205260408120805490911061046457600080fd5b60018054420190820181905560408051338152602081019290925280517fde112f62320281f04efec46e09ed286851fdd0b428dfc7214fe0e64f9364323b9281900390910190a150565b3360008181526002602090815260409182902080543401808255835194855291840191909152815190927f134e340554ff8a7d64280a2a28b982df554e2595e5bf45cd39368f31099172a692908290030190a150565b6040805180820190915260008082526020820152905600a165627a7a723058204151eb23a9a4473dd70413d4ee05dda6a34eb5dea2dd9b0034226efdba3cbd340029`
+const VipnodePoolBin = `0x608060405262093a8060015534801561001757600080fd5b506040516020806104f48339810160405251600160a060020a038116151561003e57600080fd5b60008054600160a060020a03909216600160a060020a03199092169190911790556104868061006e6000396000f30060806040526004361061008d5763ffffffff7c0100000000000000000000000000000000000000000000000000000000600035041663162075d88114610092578063570ca735146100b95780635e5c06e2146100ea5780637be80b3914610124578063ae5fa7e71461013b578063aeea1f7b14610153578063b163cc3814610168578063b27d1ce314610170575b600080fd5b34801561009e57600080fd5b506100a7610197565b60408051918252519081900360200190f35b3480156100c557600080fd5b506100ce61019d565b60408051600160a060020a039092168252519081900360200190f35b3480156100f657600080fd5b5061010b600160a060020a03600435166101ac565b6040805192835260208301919091528051918290030190f35b34801561013057600080fd5b506101396101c5565b005b34801561014757600080fd5b50610139600435610282565b34801561015f57600080fd5b506101396102d6565b61013961033d565b34801561017c57600080fd5b50610139600160a060020a0360043516602435604435610393565b60015481565b600054600160a060020a031681565b6002602052600090815260409020805460019091015482565b336000908152600260205260408120805490919081106101e457600080fd5b60018201546000106101f557600080fd5b600182015442101561020657600080fd5b508054600080835560018301819055604051339183156108fc02918491818181858888f19350505050158015610240573d6000803e3d6000fd5b50815460408051338152602081019290925280517f134e340554ff8a7d64280a2a28b982df554e2595e5bf45cd39368f31099172a69281900390910190a15050565b600054600160a060020a0316331461029957600080fd5b60008054604051600160a060020a039091169183156108fc02918491818181858888f193505050501580156102d2573d6000803e3d6000fd5b5050565b33600090815260026020526040812080549091106102f357600080fd5b60018054420190820181905560408051338152602081019290925280517fde112f62320281f04efec46e09ed286851fdd0b428dfc7214fe0e64f9364323b9281900390910190a150565b3360008181526002602090815260409182902080543401808255835194855291840191909152815190927f134e340554ff8a7d64280a2a28b982df554e2595e5bf45cd39368f31099172a692908290030190a150565b60008054600160a060020a031633146103ab57600080fd5b50600160a060020a0383166000908152600260205260408120828155600181018290559083111561040e57604051600160a060020a0385169084156108fc029085906000818181858888f1935050505015801561040c573d6000803e3d6000fd5b505b805460408051600160a060020a0387168152602081019290925280517f134e340554ff8a7d64280a2a28b982df554e2595e5bf45cd39368f31099172a69281900390910190a1505050505600a165627a7a723058209d0935c7e4b3d37e274269b61840b4b2f945ecc6e26c7740812bd6ee4fb1ccfc0029`
 
 // DeployVipnodePool deploys a new Ethereum contract, binding an instance of VipnodePool to it.
 func DeployVipnodePool(auth *bind.TransactOpts, backend bind.ContractBackend, _operator common.Address) (common.Address, *types.Transaction, *VipnodePool, error) {
@@ -176,36 +176,10 @@ func (_VipnodePool *VipnodePoolTransactorRaw) Transact(opts *bind.TransactOpts, 
 	return _VipnodePool.Contract.contract.Transact(opts, method, params...)
 }
 
-// CheckBalance is a free data retrieval call binding the contract method 0x4d7b9bd5.
+// Accounts is a free data retrieval call binding the contract method 0x5e5c06e2.
 //
-// Solidity: function checkBalance(_client address, _minBalance uint256) constant returns(bool)
-func (_VipnodePool *VipnodePoolCaller) CheckBalance(opts *bind.CallOpts, _client common.Address, _minBalance *big.Int) (bool, error) {
-	var (
-		ret0 = new(bool)
-	)
-	out := ret0
-	err := _VipnodePool.contract.Call(opts, out, "checkBalance", _client, _minBalance)
-	return *ret0, err
-}
-
-// CheckBalance is a free data retrieval call binding the contract method 0x4d7b9bd5.
-//
-// Solidity: function checkBalance(_client address, _minBalance uint256) constant returns(bool)
-func (_VipnodePool *VipnodePoolSession) CheckBalance(_client common.Address, _minBalance *big.Int) (bool, error) {
-	return _VipnodePool.Contract.CheckBalance(&_VipnodePool.CallOpts, _client, _minBalance)
-}
-
-// CheckBalance is a free data retrieval call binding the contract method 0x4d7b9bd5.
-//
-// Solidity: function checkBalance(_client address, _minBalance uint256) constant returns(bool)
-func (_VipnodePool *VipnodePoolCallerSession) CheckBalance(_client common.Address, _minBalance *big.Int) (bool, error) {
-	return _VipnodePool.Contract.CheckBalance(&_VipnodePool.CallOpts, _client, _minBalance)
-}
-
-// Clients is a free data retrieval call binding the contract method 0x61eed2a9.
-//
-// Solidity: function clients( address) constant returns(balance uint256, timeLocked uint256)
-func (_VipnodePool *VipnodePoolCaller) Clients(opts *bind.CallOpts, arg0 common.Address) (struct {
+// Solidity: function accounts( address) constant returns(balance uint256, timeLocked uint256)
+func (_VipnodePool *VipnodePoolCaller) Accounts(opts *bind.CallOpts, arg0 common.Address) (struct {
 	Balance    *big.Int
 	TimeLocked *big.Int
 }, error) {
@@ -214,28 +188,28 @@ func (_VipnodePool *VipnodePoolCaller) Clients(opts *bind.CallOpts, arg0 common.
 		TimeLocked *big.Int
 	})
 	out := ret
-	err := _VipnodePool.contract.Call(opts, out, "clients", arg0)
+	err := _VipnodePool.contract.Call(opts, out, "accounts", arg0)
 	return *ret, err
 }
 
-// Clients is a free data retrieval call binding the contract method 0x61eed2a9.
+// Accounts is a free data retrieval call binding the contract method 0x5e5c06e2.
 //
-// Solidity: function clients( address) constant returns(balance uint256, timeLocked uint256)
-func (_VipnodePool *VipnodePoolSession) Clients(arg0 common.Address) (struct {
+// Solidity: function accounts( address) constant returns(balance uint256, timeLocked uint256)
+func (_VipnodePool *VipnodePoolSession) Accounts(arg0 common.Address) (struct {
 	Balance    *big.Int
 	TimeLocked *big.Int
 }, error) {
-	return _VipnodePool.Contract.Clients(&_VipnodePool.CallOpts, arg0)
+	return _VipnodePool.Contract.Accounts(&_VipnodePool.CallOpts, arg0)
 }
 
-// Clients is a free data retrieval call binding the contract method 0x61eed2a9.
+// Accounts is a free data retrieval call binding the contract method 0x5e5c06e2.
 //
-// Solidity: function clients( address) constant returns(balance uint256, timeLocked uint256)
-func (_VipnodePool *VipnodePoolCallerSession) Clients(arg0 common.Address) (struct {
+// Solidity: function accounts( address) constant returns(balance uint256, timeLocked uint256)
+func (_VipnodePool *VipnodePoolCallerSession) Accounts(arg0 common.Address) (struct {
 	Balance    *big.Int
 	TimeLocked *big.Int
 }, error) {
-	return _VipnodePool.Contract.Clients(&_VipnodePool.CallOpts, arg0)
+	return _VipnodePool.Contract.Accounts(&_VipnodePool.CallOpts, arg0)
 }
 
 // Operator is a free data retrieval call binding the contract method 0x570ca735.
@@ -353,25 +327,25 @@ func (_VipnodePool *VipnodePoolTransactorSession) ForceWithdraw() (*types.Transa
 	return _VipnodePool.Contract.ForceWithdraw(&_VipnodePool.TransactOpts)
 }
 
-// OpSettle is a paid mutator transaction binding the contract method 0xa73e679a.
+// OpSettle is a paid mutator transaction binding the contract method 0xb27d1ce3.
 //
-// Solidity: function opSettle(_client address, _amount uint256, _release bool) returns()
-func (_VipnodePool *VipnodePoolTransactor) OpSettle(opts *bind.TransactOpts, _client common.Address, _amount *big.Int, _release bool) (*types.Transaction, error) {
-	return _VipnodePool.contract.Transact(opts, "opSettle", _client, _amount, _release)
+// Solidity: function opSettle(_account address, _releaseAmount uint256, _newBalance uint256) returns()
+func (_VipnodePool *VipnodePoolTransactor) OpSettle(opts *bind.TransactOpts, _account common.Address, _releaseAmount *big.Int, _newBalance *big.Int) (*types.Transaction, error) {
+	return _VipnodePool.contract.Transact(opts, "opSettle", _account, _releaseAmount, _newBalance)
 }
 
-// OpSettle is a paid mutator transaction binding the contract method 0xa73e679a.
+// OpSettle is a paid mutator transaction binding the contract method 0xb27d1ce3.
 //
-// Solidity: function opSettle(_client address, _amount uint256, _release bool) returns()
-func (_VipnodePool *VipnodePoolSession) OpSettle(_client common.Address, _amount *big.Int, _release bool) (*types.Transaction, error) {
-	return _VipnodePool.Contract.OpSettle(&_VipnodePool.TransactOpts, _client, _amount, _release)
+// Solidity: function opSettle(_account address, _releaseAmount uint256, _newBalance uint256) returns()
+func (_VipnodePool *VipnodePoolSession) OpSettle(_account common.Address, _releaseAmount *big.Int, _newBalance *big.Int) (*types.Transaction, error) {
+	return _VipnodePool.Contract.OpSettle(&_VipnodePool.TransactOpts, _account, _releaseAmount, _newBalance)
 }
 
-// OpSettle is a paid mutator transaction binding the contract method 0xa73e679a.
+// OpSettle is a paid mutator transaction binding the contract method 0xb27d1ce3.
 //
-// Solidity: function opSettle(_client address, _amount uint256, _release bool) returns()
-func (_VipnodePool *VipnodePoolTransactorSession) OpSettle(_client common.Address, _amount *big.Int, _release bool) (*types.Transaction, error) {
-	return _VipnodePool.Contract.OpSettle(&_VipnodePool.TransactOpts, _client, _amount, _release)
+// Solidity: function opSettle(_account address, _releaseAmount uint256, _newBalance uint256) returns()
+func (_VipnodePool *VipnodePoolTransactorSession) OpSettle(_account common.Address, _releaseAmount *big.Int, _newBalance *big.Int) (*types.Transaction, error) {
+	return _VipnodePool.Contract.OpSettle(&_VipnodePool.TransactOpts, _account, _releaseAmount, _newBalance)
 }
 
 // OpWithdraw is a paid mutator transaction binding the contract method 0xae5fa7e7.
@@ -464,14 +438,14 @@ func (it *VipnodePoolBalanceIterator) Close() error {
 
 // VipnodePoolBalance represents a Balance event raised by the VipnodePool contract.
 type VipnodePoolBalance struct {
-	Client  common.Address
+	Account common.Address
 	Balance *big.Int
 	Raw     types.Log // Blockchain specific contextual infos
 }
 
 // FilterBalance is a free log retrieval operation binding the contract event 0x134e340554ff8a7d64280a2a28b982df554e2595e5bf45cd39368f31099172a6.
 //
-// Solidity: e Balance(client address, balance uint256)
+// Solidity: e Balance(account address, balance uint256)
 func (_VipnodePool *VipnodePoolFilterer) FilterBalance(opts *bind.FilterOpts) (*VipnodePoolBalanceIterator, error) {
 
 	logs, sub, err := _VipnodePool.contract.FilterLogs(opts, "Balance")
@@ -483,7 +457,7 @@ func (_VipnodePool *VipnodePoolFilterer) FilterBalance(opts *bind.FilterOpts) (*
 
 // WatchBalance is a free log subscription operation binding the contract event 0x134e340554ff8a7d64280a2a28b982df554e2595e5bf45cd39368f31099172a6.
 //
-// Solidity: e Balance(client address, balance uint256)
+// Solidity: e Balance(account address, balance uint256)
 func (_VipnodePool *VipnodePoolFilterer) WatchBalance(opts *bind.WatchOpts, sink chan<- *VipnodePoolBalance) (event.Subscription, error) {
 
 	logs, sub, err := _VipnodePool.contract.WatchLogs(opts, "Balance")
@@ -587,14 +561,14 @@ func (it *VipnodePoolForceSettleIterator) Close() error {
 
 // VipnodePoolForceSettle represents a ForceSettle event raised by the VipnodePool contract.
 type VipnodePoolForceSettle struct {
-	Client     common.Address
+	Account    common.Address
 	TimeLocked *big.Int
 	Raw        types.Log // Blockchain specific contextual infos
 }
 
 // FilterForceSettle is a free log retrieval operation binding the contract event 0xde112f62320281f04efec46e09ed286851fdd0b428dfc7214fe0e64f9364323b.
 //
-// Solidity: e ForceSettle(client address, timeLocked uint256)
+// Solidity: e ForceSettle(account address, timeLocked uint256)
 func (_VipnodePool *VipnodePoolFilterer) FilterForceSettle(opts *bind.FilterOpts) (*VipnodePoolForceSettleIterator, error) {
 
 	logs, sub, err := _VipnodePool.contract.FilterLogs(opts, "ForceSettle")
@@ -606,7 +580,7 @@ func (_VipnodePool *VipnodePoolFilterer) FilterForceSettle(opts *bind.FilterOpts
 
 // WatchForceSettle is a free log subscription operation binding the contract event 0xde112f62320281f04efec46e09ed286851fdd0b428dfc7214fe0e64f9364323b.
 //
-// Solidity: e ForceSettle(client address, timeLocked uint256)
+// Solidity: e ForceSettle(account address, timeLocked uint256)
 func (_VipnodePool *VipnodePoolFilterer) WatchForceSettle(opts *bind.WatchOpts, sink chan<- *VipnodePoolForceSettle) (event.Subscription, error) {
 
 	logs, sub, err := _VipnodePool.contract.WatchLogs(opts, "ForceSettle")
