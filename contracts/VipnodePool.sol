@@ -52,10 +52,10 @@ contract VipnodePool {
 
   // addBalance adds the msg.sender as a Account.
   function addBalance() public payable {
-    Account storage c = accounts[msg.sender];
-    c.balance = c.balance + msg.value;
+    Account storage a = accounts[msg.sender];
+    a.balance = a.balance + msg.value;
 
-    emit Balance(msg.sender, c.balance);
+    emit Balance(msg.sender, a.balance);
   }
 
   // forceSettle emits a ForceSettle event for the msg.sender if it's a valid
@@ -65,29 +65,29 @@ contract VipnodePool {
   // which the account will be allowed to forceWithdraw.
   // Requires the account's balance to be >0.
   function forceSettle() public {
-    Account storage c = accounts[msg.sender];
-    require(c.balance > 0);
+    Account storage a = accounts[msg.sender];
+    require(a.balance > 0);
 
-    c.timeLocked = withdrawInterval + block.timestamp;
+    a.timeLocked = withdrawInterval + block.timestamp;
 
-    emit ForceSettle(msg.sender, c.timeLocked);
+    emit ForceSettle(msg.sender, a.timeLocked);
   }
 
   // forceWithdraw allows the msg.sender to withdraw any available account
   // balance iff timeLocked is set and older than now and balance > 0.
   function forceWithdraw() public {
-    Account storage c = accounts[msg.sender];
-    require(c.balance > 0);
-    require(c.timeLocked > 0);
-    require(c.timeLocked <= block.timestamp);
+    Account storage a = accounts[msg.sender];
+    require(a.balance > 0);
+    require(a.timeLocked > 0);
+    require(a.timeLocked <= block.timestamp);
 
     // Reset account
-    uint256 amount = c.balance;
-    c.balance = 0;
-    c.timeLocked = 0;
+    uint256 amount = a.balance;
+    a.balance = 0;
+    a.timeLocked = 0;
 
     msg.sender.transfer(amount);
-    emit Balance(msg.sender, c.balance);
+    emit Balance(msg.sender, a.balance);
   }
 
   // -------------------
@@ -105,15 +105,15 @@ contract VipnodePool {
   function opSettle(address _account, uint256 _releaseAmount, uint256 _newBalance) public {
     require(msg.sender == operator);
 
-    Account storage c = accounts[_account];
-    c.balance = _newBalance;
-    c.timeLocked = 0;
+    Account storage a = accounts[_account];
+    a.balance = _newBalance;
+    a.timeLocked = 0;
 
     if (_releaseAmount > 0 ) {
       _account.transfer(_releaseAmount);
     }
 
-    emit Balance(_account, c.balance);
+    emit Balance(_account, a.balance);
   }
 
   // Only callable by operator: Withdraw some balance from the contract.
